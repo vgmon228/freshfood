@@ -5,90 +5,135 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
   <%- include('_bootstrap') %>
   <body>
     <%- include('_navbar') %>
-    <div class="container mt-3">
-      <h1>Tahukah kamu?</h1>
-      <p>
-        Makanan fresh food adalah makanan yang belum mengalami proses pengawetan
-        seperti penggaraman, pengeringan, pengasapan, atau pengolahan panjang
-        lainnya yang dapat memperpanjang masa simpan makanan. Artinya, makanan
-        segar tidak memiliki tambahan bahan kimia atau proses yang dapat
-        mengurangi nilai gizi dan rasa alami makanan tersebut. Sebaliknya,
-        makanan segar lebih mempertahankan tekstur, rasa, warna, dan nutrisi
-        asli bawaannya. Ada beragam jenis makanan segar yang bisa ditemukan,
-        mulai dari sayuran yang baru dipanen, buah-buahan, daging segar, ikan
-        segar, hingga susu mentah yang belum dipasteurisasi.
-      </p>
-      <div id="carouselExampleIndicators" class="carousel slide mb-4">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="https://i.ibb.co/qC7wN3c/www-foodfresh-com.png" class="d-block w-100" alt="...">
+    <div class="p-3 mb-2 bg-warning-subtle text-warning-emphasis">
+      <div class="container mt-3">
+        <h1>Tahukah kamu?</h1>
+        <p>
+          Makanan fresh food adalah makanan yang belum mengalami proses
+          pengawetan seperti penggaraman, pengeringan, pengasapan, atau
+          pengolahan panjang lainnya yang dapat memperpanjang masa simpan
+          makanan. Artinya, makanan segar tidak memiliki tambahan bahan kimia
+          atau proses yang dapat mengurangi nilai gizi dan rasa alami makanan
+          tersebut. Sebaliknya, makanan segar lebih mempertahankan tekstur,
+          rasa, warna, dan nutrisi asli bawaannya. Ada beragam jenis makanan
+          segar yang bisa ditemukan, mulai dari sayuran yang baru dipanen,
+          buah-buahan, daging segar, ikan segar, hingga susu mentah yang belum
+          dipasteurisasi.
+        </p>
+        <div id="carouselExampleIndicators" class="carousel slide mb-4">
+          <div class="carousel-indicators">
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="0"
+              class="active"
+              aria-current="true"
+              aria-label="Slide 1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="1"
+              aria-label="Slide 2"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="2"
+              aria-label="Slide 3"
+            ></button>
           </div>
-          <div class="carousel-item">
-            <img src="https://i.ibb.co/xX4LYsX/www-foodfresh-com-1.png" class="d-block w-100" alt="...">
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-      <p>
-        <% if (role==="Admin") { %>
-          <button><a href="">Add Product</a></button>
-         <% } %>
-         <form action="">
-          <input type="text" name="query">
-          <button type="submit">Search</button>
-         </form>
-        <div class="row">
-            <% data.forEach(el => { %>
-                <div class="col-md-4 mb-4">
-                  <div class="card h-100">
-                    <img
-                      src="<%= el.imageUrl %>"
-                      class="card-img-top"
-                      alt="<%= el.name %>"
-                    />
-                    <div class="card-body">
-                      <h5 class="card-title"><%= el.name %></h5>
-                      <p class="card-text"><%= el.description %></p>
-                      <div class="d-flex justify-content-between align-items-center">
-                        <p class="card-text font-weight-bold"><%= formatter(el.price) %></p>
-                        <p class="card-text">Stock: <strong><%= el.stock %></strong></p>
-                      </div>
-                      <% if (role==="Admin") { %>
-                        <a href="/product/<%= el.id %>/edit" class="btn btn-primary"
-                        ><i class="fas fa-shopping-cart"></i> Edit </a
-                      >
-                      <a href="/product/<%=el.id%>/delete" class="btn btn-primary"
-                        ><i class="fas fa-shopping-cart"></i> Delete </a
-                      >
-                      <% } else { %>
-                        <a href="/buy/<%= el.id %>" class="btn btn-primary"
-                        ><i class="fas fa-shopping-cart"></i> Buy </a
-                      >
-                       <% } %>
-                    </div>
-                  </div>
-                </div>
-                <% if ((data.indexOf(el) + 1) % 3 === 0) { %>
-              </div>
-              <div class="row"><% } %> <% }) %></div>
+
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img
+                src="https://i.ibb.co/qC7wN3c/www-foodfresh-com.png"
+                class="d-block w-100"
+                alt="slider1"
+              />
             </div>
-      </p>
+            <div class="carousel-item">
+              <img
+                src="https://i.ibb.co/xX4LYsX/www-foodfresh-com-1.png"
+                class="d-block w-100"
+                alt="slider2"
+              />
+            </div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col text-center">
+              <% if (role==="Admin") { %>
+              <a href="/" type="button" class="btn btn-warning">Add Product</a>
+              <% } %>
+            </div>
+          </div>
+        </div>
+        <p></p>
+        <div class="row">
+          <% data.forEach(el => { %>
+          <div class="col-md-4 mb-4">
+            <div class="card h-100">
+              <img
+                src="<%= el.imageUrl %>"
+                class="card-img-top"
+                alt="<%= el.name %>"
+              />
+              <div class="card-body">
+                <h5 class="card-title"><%= el.name %></h5>
+                <p class="card-text"><%= el.description %></p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p class="card-text font-weight-bold">
+                    <%= formatter(el.price) %>
+                  </p>
+                  <p class="card-text">
+                    Stock: <strong><%= el.stock %></strong>
+                  </p>
+                </div>
+                <% if (role==="Admin") { %>
+                <a href="/product/<%= el.id %>/edit" class="btn btn-primary"
+                  ><i class="fas fa-shopping-cart"></i> Edit
+                </a>
+                <a href="/product/<%=el.id%>/delete" class="btn btn-warning"
+                  ><i class="fas fa-shopping-cart"></i> Delete
+                </a>
+                <% } else { %>
+                <a href="/buy/<%= el.id %>" class="btn btn-danger"
+                  ><i class="fas fa-shopping-cart"></i> Buy
+                </a>
+                <% } %>
+              </div>
+            </div>
+          </div>
+          <% if ((data.indexOf(el) + 1) % 3 === 0) { %>
+        </div>
+        <div class="row"><% } %> <% }) %></div>
+      </div>
+    </div>
     <%- include('_bootstrap') %>
   </body>
 </html>
