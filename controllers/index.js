@@ -131,6 +131,21 @@ class Controller {
     }
   }
 
+  static async delete(req, res) {
+    try {
+      const productId = req.params.productId;
+      await Product.destroy({
+        where: {
+          id: productId,
+        },
+      });
+      res.redirect("/home");
+    } catch (error) {
+      console.log(error);
+      res.send(error.message);
+    }
+  }
+
   static async getOrder(req, res) {
     let data = await Order.findAll({ include: Product });
     res.render("order", { data });
