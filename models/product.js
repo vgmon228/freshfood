@@ -54,6 +54,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         notNull: {
           msg: "Description is required "
+        },
+        checkdesc(value){
+          if(value.trim().split(/\s+/).length<10){
+            throw new Error('Description must have atleast 10 words')
+          }
         }
       }
     },
@@ -66,6 +71,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         notNull: {
           msg: "Price is required "
+        },
+        checkprice(value){
+          if(value<1){
+            throw new Error('Price must more than 0')
+          }
         }
       }
     },
@@ -85,6 +95,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         notNull: {
           msg: "Stock is required "
+        },
+        checkltezero(value){
+          if(value<1){
+            throw new Error('Stock must more than 0 ')
+          }
         }
       }
     },

@@ -73,8 +73,9 @@ class Controller {
   }
 
   static async getAddProduct(req, res) {
+    let {error}=req.query
     let categorie = await Categorie.findAll();
-    res.render("addProduct", { categorie });
+    res.render("addProduct", { categorie,error });
   }
 
   static async postAddProduct(req, res) {
@@ -90,8 +91,12 @@ class Controller {
       });
       res.redirect("/home");
     } catch (error) {
-      console.log(error);
-      res.send(error.message);
+      if (error.name === "SequelizeValidationError") {
+        const message = error.errors.map((e) => e.message)
+        res.redirect(`/product/add?error=${message}`)
+      } else {
+        res.send(error)
+      }
     }
   }
 
@@ -114,13 +119,14 @@ class Controller {
   }
 
   static async showProductEdit(req, res) {
+    let {error}=req.query
     try {
       const productId = req.params.productId;
       let data = await Product.findByPk(productId, {
         include: [Categorie],
       });
       //   console.log(data.dataValues);
-      res.render("editProduct", { data, formatter });
+      res.render("editProduct", { data, formatter,error });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -128,8 +134,8 @@ class Controller {
   }
 
   static async postProductEdit(req, res) {
+    const productId = req.params.productId;
     try {
-      const productId = req.params.productId;
       const { name, description, CategoryId, price, stock } = req.body;
       await Product.update(
         {
@@ -148,8 +154,13 @@ class Controller {
 
       res.redirect("/home");
     } catch (error) {
-      console.log(error);
-      res.send(error.message)
+      if (error.name === "SequelizeValidationError") {
+        const message = error.errors.map((e) => e.message)
+        res.redirect(`/product/${productId}/edit?error=${message}`)
+      } else {
+        console.log(error)
+        res.send(error)
+      }
     }
   }
 

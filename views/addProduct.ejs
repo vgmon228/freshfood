@@ -7,6 +7,9 @@
 </head>
 <body>
     <h1>Add Product</h1>
+    <% if (error) { %>
+     <p style="color: red;"><%= error %></p>
+    <% } %>
     <form action="" method="post">
         <p><label>Nama Product</label></p>
         <p><input type="text" name="name"></p>
