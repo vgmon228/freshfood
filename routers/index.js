@@ -11,6 +11,7 @@ router.post('/login',Controller.postLogin)
 router.get('/home', Controller.getHome)
 router.get('/product/add',Controller.getAddProduct)
 router.post('/product/add',Controller.postAddProduct)
+router.get('/orders',Controller.getOrder)
 
 
 module.exports = router

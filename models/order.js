@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       Order.belongsTo(models.User)
       Order.belongsToMany(models.Product,{through: models.OrderDetail})
     }
+    get date(){
+      return this.orderDate.toLocaleDateString()
+    }
   }
   Order.init({
     order: DataTypes.STRING,

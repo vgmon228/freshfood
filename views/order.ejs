@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Food</title>
+</head>
+<body>
+    <h1>Order</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Order Id</th>
+                <th>Status</th>
+                <th>Order Date</th>
+                <th>Product</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% data.forEach(element => { %>
+            <tr> 
+             <td><%= element.order %></td>
+             <td><%= element.status %></td>
+             <td><%= element.date %></td>
+            <td>
+                <% if (element.Products) { %>
+                    <%= element.Products.map(ea=>ea.name).join(",") %>
+                
+                <% } else { %>
+                    <% } %> 
+            </td>
+            <td><button><a href="">See Details</a></button></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -74,5 +74,11 @@ class Controller {
       res.send(error.message)
     }
   }
+
+  static async getOrder(req,res){
+    let data = await Order.findAll({include:Product})
+    res.render('order',{data})
+    //res.render('order',{data})
+  }
 }
 module.exports = Controller;
