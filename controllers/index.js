@@ -40,8 +40,13 @@ class Controller {
 
   static async getHome(req, res) {
     try {
-        
-    } catch (error) {}
+        let data = await Product.findAll()
+        // console.log(data[0].dataValues); 
+        res.render("home", {data})
+    } catch (error) {
+        console.log(error);
+        res.send(error.message)
+    }
   }
 
   static async test(req,res){
