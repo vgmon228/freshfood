@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Product } = require("../models");
 const bcrypt = require("bcryptjs");
 class Controller {
   static async getRegister(req, res) {
@@ -40,8 +40,13 @@ class Controller {
 
   static async getHome(req, res) {
     try {
-        
-    } catch (error) {}
+        let data = await Product.findAll()
+        console.log(data[0].dataValues);
+        res.render("home", {data})
+    } catch (error) {
+        console.log(error);
+        res.send(error.message)
+    }
   }
 }
 module.exports = Controller;
