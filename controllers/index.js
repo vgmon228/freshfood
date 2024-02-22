@@ -58,5 +58,21 @@ class Controller {
       res.send(error.message)
     }
   }
+
+  static async getAddProduct(req,res){
+    let categorie = await Categorie.findAll()
+    res.render('addProduct',{categorie})
+  }
+
+  static async postAddProduct(req,res){
+    let{name,description,price,CategoryId,imageUrl,stock}=req.body
+    try {
+      await Product.create({name,description,price,CategoryId,imageUrl,stock})
+      res.redirect('/home')
+    } catch (error) {
+      console.log(error)
+      res.send(error.message)
+    }
+  }
 }
 module.exports = Controller;
