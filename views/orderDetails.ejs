@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Food</title>
+</head>
+<body>
+    <h1>Order Id :<%= data.order %></h1>
+    <h3>Status : <%= data.status %></h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Gambar</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% data.Products.forEach(element => { %>
+            <tr>
+                <td>
+                    <img src="<%= element.imageUrl %>" alt="">
+                 </td>
+                 <td><%= element.description %></td>
+                 <td><%= element.price %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>

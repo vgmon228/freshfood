@@ -13,6 +13,7 @@ router.get('/product/add',Controller.getAddProduct)
 router.post('/product/add',Controller.postAddProduct)
 router.get("/product/edit")
 router.get('/orders',Controller.getOrder)
+router.get('/ordersdetail/:id',Controller.getOrderDetail)
 
 
 module.exports = router

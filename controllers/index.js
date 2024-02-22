@@ -84,10 +84,19 @@ class Controller {
     }
   }
 
-  static async getOrder(req, res) {
-    let data = await Order.findAll({ include: Product });
-    res.render("order", { data });
-    //res.render('order',{data})
+  static async getOrder(req,res){
+    let data = await Order.findAll({include:Product})
+    res.render('order',{data})
+  }
+
+  static async getOrderDetail(req,res){
+    let{id} = req.params
+    try {
+      let data = await Order.findByPk(id,{include:Product})
+      res.render('orderDetails',{data})
+    } catch (error) {
+      
+    }
   }
 }
 module.exports = Controller;
