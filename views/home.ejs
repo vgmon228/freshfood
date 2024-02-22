@@ -28,9 +28,6 @@
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
-        <% if (role==="Admin") { %>
-          <button><a href="">Add Product</a></button>
-         <% } %>
         <div class="carousel-inner">
           <div class="carousel-item active">
             <img src="https://i.ibb.co/qC7wN3c/www-foodfresh-com.png" class="d-block w-100" alt="...">
@@ -49,6 +46,13 @@
         </button>
       </div>
       <p>
+        <% if (role==="Admin") { %>
+          <button><a href="">Add Product</a></button>
+         <% } %>
+         <form action="">
+          <input type="text" name="query">
+          <button type="submit">Search</button>
+         </form>
         <div class="row">
             <% data.forEach(el => { %>
                 <div class="col-md-4 mb-4">
