@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const { Op } = require("sequelize")
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
     /**j
