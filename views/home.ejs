@@ -88,7 +88,7 @@
           <div class="row">
             <div class="col text-center">
               <% if (role==="Admin") { %>
-              <a href="/" type="button" class="btn btn-warning">Add Product</a>
+              <a href="/product/add" type="button" class="btn btn-warning">Add Product</a>
               <% } %>
             </div>
           </div>
@@ -98,6 +98,9 @@
           <input type="text" name="query">
           <button type="submit">Search</button>
          </form>
+         <% if (error) { %>
+          <p style="color: red;"><%= error %></p>
+         <% } %>
         <div class="row">
           <% data.forEach(el => { %>
           <div class="col-md-4 mb-4">
