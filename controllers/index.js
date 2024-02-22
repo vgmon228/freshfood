@@ -93,7 +93,7 @@ class Controller {
     let{id} = req.params
     try {
       let data = await Order.findByPk(id,{include:Product})
-      res.render('orderDetails',{data})
+      res.render('orderDetails',{data,formatter})
     } catch (error) {
       
     }
