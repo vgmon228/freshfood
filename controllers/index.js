@@ -43,10 +43,11 @@ class Controller {
   }
 
   static async getHome(req, res) {
+    let role = req.session.role
     try {
       let data = await Product.findAll();
       // console.log(data[0].dataValues);
-      res.render("home", { data, formatter });
+      res.render("home", { data, formatter, role });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -93,6 +94,7 @@ class Controller {
 
   static async getOrderDetail(req,res){
     let{id} = req.params
+    //console.log(req.session.role)
     try {
       let data = await Order.findByPk(id,{include:Product})
       res.render('orderDetails',{data,formatter})
@@ -109,6 +111,15 @@ class Controller {
       console.log(error)
       res.send(error)
     }
+  }
+
+  static async getBuy(req,res){
+    let UserId = req.session.userid
+    let{id}=req.params
+    let data = await Product.findOne({where:{id}})
+    data.increment('stock',{by: -1})
+    Order.create({UserId})
+    res.redirect('/home')
   }
 }
 module.exports = Controller;

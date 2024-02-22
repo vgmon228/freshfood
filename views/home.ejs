@@ -28,6 +28,9 @@
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
+        <% if (role==="Admin") { %>
+          <button><a href="">Add Product</a></button>
+         <% } %>
         <div class="carousel-inner">
           <div class="carousel-item active">
             <img src="https://i.ibb.co/qC7wN3c/www-foodfresh-com.png" class="d-block w-100" alt="...">
@@ -62,12 +65,18 @@
                         <p class="card-text font-weight-bold"><%= formatter(el.price) %></p>
                         <p class="card-text">Stock: <strong><%= el.stock %></strong></p>
                       </div>
-                      <a href="/product/edit" class="btn btn-primary"
+                      <% if (role==="Admin") { %>
+                        <a href="/product/edit" class="btn btn-primary"
                         ><i class="fas fa-shopping-cart"></i> Edit </a
                       >
                       <a href="#" class="btn btn-primary"
                         ><i class="fas fa-shopping-cart"></i> Delete </a
                       >
+                      <% } else { %>
+                        <a href="/buy/<%= el.id %>" class="btn btn-primary"
+                        ><i class="fas fa-shopping-cart"></i> Buy </a
+                      >
+                       <% } %>
                     </div>
                   </div>
                 </div>
