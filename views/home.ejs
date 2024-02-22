@@ -66,7 +66,7 @@
                         <p class="card-text">Stock: <strong><%= el.stock %></strong></p>
                       </div>
                       <% if (role==="Admin") { %>
-                        <a href="/product/edit" class="btn btn-primary"
+                        <a href="/product/<%= el.id %>/edit" class="btn btn-primary"
                         ><i class="fas fa-shopping-cart"></i> Edit </a
                       >
                       <a href="#" class="btn btn-primary"

@@ -113,6 +113,20 @@ class Controller {
     }
   }
 
+  static async showProductEdit(req, res) {
+    try {
+      const productId = req.params.productId;
+      let data = await Product.findByPk(productId, {
+          include: [Categorie]
+      });
+    //   console.log(data.dataValues);
+      res.render("editProduct", { data, formatter });
+    } catch (error) {
+      console.log(error);
+      res.send(error.message);
+    }
+  }
+  
   static async postProductEdit(req, res) {
     try {
       const productId = req.params.productId;
