@@ -1,0 +1,10 @@
+.btn-custom {
+    background-color: #123456; /* Warna background */
+    color: #f8a55f; /* Warna teks */
+    border-color: #123456; /* Warna border, sesuaikan jika perlu */
+  }
+
+  .btn-custom:hover {
+    background-color: #0f2345; /* Sedikit lebih gelap dari warna asli */
+    color: #f8a55f;
+  }

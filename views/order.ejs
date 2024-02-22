@@ -6,34 +6,43 @@
     <title>Fresh Food</title>
 </head>
 <body>
-    <h1>Order</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Order Id</th>
-                <th>Status</th>
-                <th>Order Date</th>
-                <th>Product</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% data.forEach(element => { %>
-            <tr> 
-             <td><%= element.order %></td>
-             <td><%= element.status %></td>
-             <td><%= element.date %></td>
-            <td>
-                <% if (element.Products) { %>
-                    <%= element.Products.map(ea=>ea.name).join(",") %>
-                
-                <% } else { %>
-                    <% } %> 
-            </td>
-            <td><button><a href="/ordersdetail/<%= element.id %>">See Details</a></button></td>
-            </tr>
-            <% }) %>
-        </tbody>
-    </table>
+    <%- include('_navbar') %>
+    <div class="container">
+        <p></p>
+        <h1>Orders</h1>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Order ID</th>
+                <th scope="col">Product</th>
+                <th scope="col">Status</th>
+                <th scope="col">Order Date</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                <%data.forEach(element => { %>
+                    <tr> 
+                        <th scope="row"><%= element.order %></td>
+                        <td><%= element.status %></td>
+                        <td><%= element.date %></td>
+                       <td>
+                           <% if (element.Products) { %>
+                               <%= element.Products.map(ea=>ea.name).join(",") %>
+                           
+                           <% } else { %>
+                               <% } %> 
+                       </td>
+                       <td><a href="/ordersdetail/<%= element.id %>" type="button" class="btn btn-warning">See Details</a></td>
+                       </tr>
+             <% }) %>
+            </tbody>
+          </table>
+    </div>
+    <%- include('_bootstrap') %>
 </body>
 </html>
