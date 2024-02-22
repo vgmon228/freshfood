@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Brokoli",
+    "description": "Brokoli 1kg yang sangat fresh dan di tanam dengan baik sehingga menghasilkan sayur organik terbaik",
+    "price": 40000,
+    "CategoryId": 2,
+    "stock": 100,
+    "imageUrl": "https://i.ibb.co/xmkDvLj/brokoli.png"
+  },
+  {
+    "name": "Strawberry",
+    "description": "Strawberry 1kg yang sangat fresh dan di tanam dengan baik sehingga menghasilkan sayur organik terbaik",
+    "price": 456000,
+    "CategoryId": 1,
+    "stock": 100,
+    "imageUrl": "https://i.ibb.co/zFLWMv1/strawberry.png"
+  },
+  {
+    "name": "Mangga",
+    "description": "Mangga 1kg yang sangat fresh dan di tanam dengan baik sehingga menghasilkan sayur organik terbaik",
+    "price": 100000,
+    "CategoryId": 1,
+    "stock": 30,
+    "imageUrl": "https://i.ibb.co/RTL5fF2/mangga.png"
+  },
+  {
+    "name": "Durian",
+    "description": "Durian 1kg yang sangat fresh dan di tanam dengan baik sehingga menghasilkan sayur organik terbaik",
+    "price": 159000,
+    "CategoryId": 1,
+    "stock": 30,
+    "imageUrl": "https://i.ibb.co/s1Zp8GD/durian.png"
+  },
+  {
+    "name": "Tuna",
+    "description": "Tuna 1kg yang sangat fresh dan di tanam dengan baik sehingga menghasilkan sayur organik terbaik",
+    "price": 100000,
+    "CategoryId": 3,
+    "stock": 20,
+    "imageUrl": "https://i.ibb.co/mBkhpGh/tuna.png"
+  },
+  {
+    "name": "Salmon",
+    "description": "Kol 1kg yang sangat fresh dan di tanam dengan baik sehingga menghasilkan sayur organik terbaik",
+    "price": 90000,
+    "CategoryId": 3,
+    "stock": 20,
+    "imageUrl": "https://i.ibb.co/JdCpds1/salmon.png"
+  },
+  {
+    "name": "Marlin",
+    "description": "Kol 1kg yang sangat fresh dan di tanam dengan baik sehingga menghasilkan sayur organik terbaik",
+    "price": 50000,
+    "CategoryId": 3,
+    "stock": 20,
+    "imageUrl": "https://i.ibb.co/xgS11d8/marlin.png"
+  }
+]
