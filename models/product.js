@@ -11,15 +11,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // Product.belongsToMany(models.OrderDetail, {foreignKey: "ProductId"})
-      // Product.belongsTo(models.Category, {foreignKey:"CategoryId"})
+      Product.belongsToMany(models.Order, {through: models.OrderDetail})
+      Product.belongsTo(models.Categorie, {foreignKey:"CategoryId"})
     }
   }
   Product.init({
     name: DataTypes.STRING,
     description: DataTypes.STRING,
     price: DataTypes.INTEGER,
-    CategoryId: DataTypes.INTEGER,
+    CategoryId: {
+      type: DataTypes.INTEGER,
+      references:{
+        model: 'Categories',
+        key:'id'
+      }
+    },
     stock: DataTypes.INTEGER,
     imageUrl: DataTypes.STRING
   }, {
