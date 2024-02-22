@@ -1,5 +1,7 @@
-const { User,Product,Order,OrderDetail,Categorie } = require("../models");
+const { User, Product, Order, OrderDetail, Categorie } = require("../models");
 const bcrypt = require("bcryptjs");
+const formatter = require("../helper");
+
 class Controller {
   static async getRegister(req, res) {
     res.render("register");
@@ -40,44 +42,51 @@ class Controller {
 
   static async getHome(req, res) {
     try {
-        let data = await Product.findAll()
-        // console.log(data[0].dataValues); 
-        res.render("home", {data})
+      let data = await Product.findAll();
+      // console.log(data[0].dataValues);
+      res.render("home", { data, formatter });
     } catch (error) {
-        console.log(error);
-        res.send(error.message)
+      console.log(error);
+      res.send(error.message);
     }
   }
 
-  static async test(req,res){
+  static async test(req, res) {
     try {
-      let data = await Product.findAll({include: Categorie})
-      res.send(data)
+      let data = await Product.findAll({ include: Categorie });
+      res.send(data);
     } catch (error) {
-      console.log(error)
-      res.send(error.message)
+      console.log(error);
+      res.send(error.message);
     }
   }
 
-  static async getAddProduct(req,res){
-    let categorie = await Categorie.findAll()
-    res.render('addProduct',{categorie})
+  static async getAddProduct(req, res) {
+    let categorie = await Categorie.findAll();
+    res.render("addProduct", { categorie });
   }
 
-  static async postAddProduct(req,res){
-    let{name,description,price,CategoryId,imageUrl,stock}=req.body
+  static async postAddProduct(req, res) {
+    let { name, description, price, CategoryId, imageUrl, stock } = req.body;
     try {
-      await Product.create({name,description,price,CategoryId,imageUrl,stock})
-      res.redirect('/home')
+      await Product.create({
+        name,
+        description,
+        price,
+        CategoryId,
+        imageUrl,
+        stock,
+      });
+      res.redirect("/home");
     } catch (error) {
-      console.log(error)
-      res.send(error.message)
+      console.log(error);
+      res.send(error.message);
     }
   }
 
-  static async getOrder(req,res){
-    let data = await Order.findAll({include:Product})
-    res.render('order',{data})
+  static async getOrder(req, res) {
+    let data = await Order.findAll({ include: Product });
+    res.render("order", { data });
     //res.render('order',{data})
   }
 }
