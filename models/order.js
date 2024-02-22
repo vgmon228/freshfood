@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         order.orderDate=new Date()
         order.status='Pending'
         let tmp = ['JAN','FEB','MAR','APR','MEI','JUN','JUL','AGS','SEP','OKT','NOV','DES']
-        order.order=`${order.id}${tmp[order.orderDate.getMonth()]}${order.orderDate.getTime()}`
+        order.order=`${tmp[order.orderDate.getMonth()]}${order.orderDate.getTime()}`
       }
     }
   });

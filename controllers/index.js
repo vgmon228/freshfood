@@ -2,6 +2,7 @@ const { User, Product, Order, OrderDetail, Categorie } = require("../models");
 const bcrypt = require("bcryptjs");
 const formatter = require("../helper");
 const { or } = require("sequelize");
+const { Op } = require("sequelize")
 
 class Controller {
   static async getRegister(req, res) {
@@ -44,9 +45,18 @@ class Controller {
   }
 
   static async getHome(req, res) {
+    let {query} = req.query
     let role = req.session.role;
     try {
-      let data = await Product.findAll({
+      let where ={}
+      if(query){
+        where={
+          name:{
+            [Op.iLike]:`%${query}%`
+          }
+        }
+      }
+      let data = await Product.findAll({where,
         order: [
           ["CategoryId", "ASC"],
           ["name", "ASC"],
@@ -103,11 +113,8 @@ class Controller {
     //console.log(req.session.role)
     try {
       const productId = req.params.productId;
-      let data = await Product.findByPk(productId, {
-        include: [Categorie],
-      });
-      //   console.log(data.dataValues);
-      res.render("editProduct", { data, formatter });
+      let data = await Product.findByPk(productId);
+      res.render("orderDetails", { data });
     } catch (error) {
       console.log(error);
       res.send(error.message);
