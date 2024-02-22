@@ -33,9 +33,42 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Product.init({
-    name: DataTypes.STRING,
-    description: DataTypes.STRING,
-    price: DataTypes.INTEGER,
+    name: {
+      type : DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "Name is required "
+        },
+        notNull: {
+          msg: "Name is required "
+        }
+      }
+    },
+    description:{
+      type : DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "Description is required "
+        },
+        notNull: {
+          msg: "Description is required "
+        }
+      }
+    },
+    price: {
+      type : DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "Price is required "
+        },
+        notNull: {
+          msg: "Price is required "
+        }
+      }
+    },
     CategoryId: {
       type: DataTypes.INTEGER,
       references:{
@@ -43,8 +76,30 @@ module.exports = (sequelize, DataTypes) => {
         key:'id'
       }
     },
-    stock: DataTypes.INTEGER,
-    imageUrl: DataTypes.STRING
+    stock: {
+      type : DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "Stock is required "
+        },
+        notNull: {
+          msg: "Stock is required "
+        }
+      }
+    },
+    imageUrl: {
+      type : DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "ImageUrl is required "
+        },
+        notNull: {
+          msg: "ImageUrl is required "
+        }
+      }
+    },
   }, {
     sequelize,
     modelName: 'Product',

@@ -7,6 +7,9 @@
 </head>
 <body>
     <h1>Register</h1>
+    <% if (error) { %>
+     <p style="color: red;"><%= error %></p>
+    <% } %>
     <form action="" method="post">
         <p><label >Username</label></p>
         <p><input type="text" name="username"></p>

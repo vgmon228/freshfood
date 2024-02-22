@@ -6,7 +6,8 @@ const { Op } = require("sequelize")
 
 class Controller {
   static async getRegister(req, res) {
-    res.render("register");
+    let {error}=req.query
+    res.render("register",{error});
   }
 
   static async postRegister(req, res) {
@@ -15,8 +16,12 @@ class Controller {
       await User.create({ username, email, password, role });
       res.redirect("/login");
     } catch (error) {
-      console.log(error);
-      res.send(error.message);
+      if (error.name === "SequelizeValidationError") {
+        const message = error.errors.map((e) => e.message)
+        res.redirect(`/register?error=${message}`)
+      } else {
+        res.send(error)
+      }
     }
   }
 
@@ -45,12 +50,12 @@ class Controller {
   }
 
   static async getHome(req, res) {
-    let {query,error} = req.query
+    let { query, error } = req.query
     let role = req.session.role;
     try {
       let data = await Product.findSearch(query)
       // console.log(data[0].dataValues);
-      res.render("home", { data, formatter, role,error });
+      res.render("home", { data, formatter, role, error });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -159,12 +164,12 @@ class Controller {
       data.destroy()
       res.redirect(`/home?error=Product ${data.name} has been deleted`);
     } catch (error) {
-        if (error.name === 'SequelizeForeignKeyConstraintError') {
-            res.redirect(`/home?error=${'The product is still in the user order'}`)
-        }else{
-          res.send(error)
-        }
-      
+      if (error.name === 'SequelizeForeignKeyConstraintError') {
+        res.redirect(`/home?error=${'The product is still in the user order'}`)
+      } else {
+        res.send(error)
+      }
+
     }
   }
 
@@ -178,7 +183,7 @@ class Controller {
     try {
       let data = await Order.findByPk(id, { include: Product });
       res.render("orderDetails", { data });
-    } catch (error) {}
+    } catch (error) { }
   }
 
   static async getLogOut(req, res) {
@@ -191,15 +196,15 @@ class Controller {
     }
   }
 
-  static async getBuy(req,res){
+  static async getBuy(req, res) {
     let UserId = req.session.userid
-    let{id}=req.params
-    let data = await Product.findOne({where:{id}})
-    data.increment('stock',{by: -1})
-    let order = await Order.create({UserId})
+    let { id } = req.params
+    let data = await Product.findOne({ where: { id } })
+    data.increment('stock', { by: -1 })
+    let order = await Order.create({ UserId })
     let OrderId = order.id
     let ProductId = data.id
-    OrderDetail.create({ProductId,OrderId})
+    OrderDetail.create({ ProductId, OrderId })
     res.redirect('/home')
   }
 }
