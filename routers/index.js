@@ -23,7 +23,9 @@ router.post("/product/:productId/edit", Controller.postProductEdit)
 router.get("/product/:productId/delete", Controller.delete)
 router.get('/orders',Controller.getOrder)
 router.get('/ordersdetail/:id',Controller.getOrderDetail)
+router.get('/buy/:id', Controller.getBuy)
 router.get('/logout',Controller.getLogOut)
+
 
 
 module.exports = router

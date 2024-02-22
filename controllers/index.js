@@ -43,6 +43,7 @@ class Controller {
   }
 
   static async getHome(req, res) {
+    let role = req.session.role
     try {
       let data = await Product.findAll({
         order: [
@@ -51,7 +52,7 @@ class Controller {
         ],
       });
       // console.log(data[0].dataValues);
-      res.render("home", { data, formatter });
+      res.render("home", { data, formatter, role });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -91,7 +92,14 @@ class Controller {
     }
   }
 
-  static async showProductEdit(req, res) {
+  static async getOrder(req,res){
+    let data = await Order.findAll({include:Product})
+    res.render('order',{data})
+  }
+
+  static async getOrderDetail(req,res){
+    let{id} = req.params
+    //console.log(req.session.role)
     try {
       const productId = req.params.productId;
       let data = await Product.findByPk(productId, {
@@ -105,6 +113,20 @@ class Controller {
     }
   }
 
+  static async showProductEdit(req, res) {
+    try {
+      const productId = req.params.productId;
+      let data = await Product.findByPk(productId, {
+          include: [Categorie]
+      });
+    //   console.log(data.dataValues);
+      res.render("editProduct", { data, formatter });
+    } catch (error) {
+      console.log(error);
+      res.send(error.message);
+    }
+  }
+  
   static async postProductEdit(req, res) {
     try {
       const productId = req.params.productId;
@@ -167,6 +189,15 @@ class Controller {
       console.log(error);
       res.send(error);
     }
+  }
+
+  static async getBuy(req,res){
+    let UserId = req.session.userid
+    let{id}=req.params
+    let data = await Product.findOne({where:{id}})
+    data.increment('stock',{by: -1})
+    Order.create({UserId})
+    res.redirect('/home')
   }
 }
 module.exports = Controller;
