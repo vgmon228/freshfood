@@ -185,7 +185,21 @@ class Controller {
   }
 
   static async getOrder(req, res) {
-    let data = await Order.findAll({ include: Product });
+    let role = req.session.role
+    let UserId = req.session.userid
+    let data;
+    if(role !== "Admin"){
+      data = await Order.findAll({
+        where: {
+          UserId
+        },
+      include: {
+        model: Product
+      }
+    })
+    }else{
+      data = await Order.findAll({ include: Product });
+    }
     res.render("order", { data });
   }
 
