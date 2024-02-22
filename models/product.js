@@ -14,6 +14,22 @@ module.exports = (sequelize, DataTypes) => {
       Product.belongsToMany(models.Order, {through: models.OrderDetail})
       Product.belongsTo(models.Categorie, {foreignKey:"CategoryId"})
     }
+    static findSearch(query){
+      let where ={}
+      if(query){
+        where={
+          name:{
+            [Op.iLike]:`%${query}%`
+          }
+        }
+      }
+      return Product.findAll({where,
+        order: [
+          ["CategoryId", "ASC"],
+          ["name", "ASC"],
+        ],
+      });
+    }
   }
   Product.init({
     name: DataTypes.STRING,

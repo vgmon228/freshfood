@@ -48,20 +48,7 @@ class Controller {
     let {query} = req.query
     let role = req.session.role;
     try {
-      let where ={}
-      if(query){
-        where={
-          name:{
-            [Op.iLike]:`%${query}%`
-          }
-        }
-      }
-      let data = await Product.findAll({where,
-        order: [
-          ["CategoryId", "ASC"],
-          ["name", "ASC"],
-        ],
-      });
+      let data = await Product.findSearch(query)
       // console.log(data[0].dataValues);
       res.render("home", { data, formatter, role });
     } catch (error) {
