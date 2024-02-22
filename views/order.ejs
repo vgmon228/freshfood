@@ -37,7 +37,11 @@
                            <% } else { %>
                                <% } %> 
                        </td>
-                       <td><a href="/ordersdetail/<%= element.id %>" type="button" class="btn btn-warning">See Details</a></td>
+                       <td><a href="/ordersdetail/<%= element.id %>" type="button" class="btn btn-warning">See Details</a>
+                        <% if (role === "Admin" && element.status === "Pending") { %>
+                            <a href="/orders/<%= element.id %>" type="button" class="btn btn-warning">Update</a>
+                        <% } %>
+                    </td>
                        </tr>
              <% }) %>
             </tbody>

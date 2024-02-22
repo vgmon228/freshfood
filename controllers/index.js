@@ -1,4 +1,4 @@
-const { User, Product, Order, OrderDetail, Categorie } = require("../models");
+const { User, Product, Order, OrderDetail, Categorie, sequelize } = require("../models");
 const bcrypt = require("bcryptjs");
 const formatter = require("../helper");
 const { or } = require("sequelize");
@@ -6,8 +6,8 @@ const { Op } = require("sequelize")
 
 class Controller {
   static async getRegister(req, res) {
-    let {error}=req.query
-    res.render("register",{error});
+    let { error } = req.query
+    res.render("register", { error });
   }
 
   static async postRegister(req, res) {
@@ -62,20 +62,14 @@ class Controller {
     }
   }
 
-  static async test(req, res) {
-    try {
-      let data = await Product.findAll({ include: Categorie });
-      res.send(data);
-    } catch (error) {
-      console.log(error);
-      res.send(error.message);
-    }
-  }
-
   static async getAddProduct(req, res) {
-    let {error}=req.query
-    let categorie = await Categorie.findAll();
-    res.render("addProduct", { categorie,error });
+    let { error } = req.query
+    try {
+      let categorie = await Categorie.findAll();
+      res.render("addProduct", { categorie, error });
+    } catch (error) {
+      res.send(error)
+    }
   }
 
   static async postAddProduct(req, res) {
@@ -100,33 +94,15 @@ class Controller {
     }
   }
 
-  static async getOrder(req, res) {
-    let data = await Order.findAll({ include: Product });
-    res.render("order", { data });
-  }
-
-  static async getOrderDetail(req, res) {
-    let { id } = req.params;
-    //console.log(req.session.role)
-    try {
-      const productId = req.params.productId;
-      let data = await Product.findByPk(productId);
-      res.render("orderDetails", { data });
-    } catch (error) {
-      console.log(error);
-      res.send(error.message);
-    }
-  }
-
   static async showProductEdit(req, res) {
-    let {error}=req.query
+    let { error } = req.query
     try {
       const productId = req.params.productId;
       let data = await Product.findByPk(productId, {
         include: [Categorie],
       });
       //   console.log(data.dataValues);
-      res.render("editProduct", { data, formatter,error });
+      res.render("editProduct", { data, formatter, error });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -188,19 +164,19 @@ class Controller {
     let role = req.session.role
     let UserId = req.session.userid
     let data;
-    if(role !== "Admin"){
+    if (role !== "Admin") {
       data = await Order.findAll({
         where: {
           UserId
         },
-      include: {
-        model: Product
-      }
-    })
-    }else{
+        include: {
+          model: Product
+        }
+      })
+    } else {
       data = await Order.findAll({ include: Product });
     }
-    res.render("order", { data });
+    res.render("order", { data,role });
   }
 
   static async getOrderDetail(req, res) {
@@ -208,7 +184,10 @@ class Controller {
     try {
       let data = await Order.findByPk(id, { include: Product });
       res.render("orderDetails", { data });
-    } catch (error) { }
+    } catch (error) {
+      console.log(error)
+      res.send(error)
+    }
   }
 
   static async getLogOut(req, res) {
@@ -224,13 +203,23 @@ class Controller {
   static async getBuy(req, res) {
     let UserId = req.session.userid
     let { id } = req.params
-    let data = await Product.findOne({ where: { id } })
-    data.increment('stock', { by: -1 })
-    let order = await Order.create({ UserId })
-    let OrderId = order.id
-    let ProductId = data.id
-    OrderDetail.create({ ProductId, OrderId })
-    res.redirect('/home')
+    try {
+      let data = await Product.findOne({ where: { id } })
+      data.increment('stock', { by: -1 })
+      let order = await Order.create({ UserId })
+      let OrderId = order.id
+      let ProductId = data.id
+      OrderDetail.create({ ProductId, OrderId })
+      res.redirect('/home')
+    } catch (error) {
+      req.send(error)
+    }
+  }
+
+  static async updateOrder(req,res){
+    let {id}=req.params
+    Order.update({status:'Delivered'},{where:{id}})
+    res.redirect('/orders')
   }
 }
 module.exports = Controller;
