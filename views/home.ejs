@@ -62,7 +62,7 @@
                         <p class="card-text font-weight-bold"><%= formatter(el.price) %></p>
                         <p class="card-text">Stock: <strong><%= el.stock %></strong></p>
                       </div>
-                      <a href="/product/edit" class="btn btn-primary"
+                      <a href="/product/<%=el.id%>/edit" class="btn btn-primary"
                         ><i class="fas fa-shopping-cart"></i> Edit </a
                       >
                       <a href="#" class="btn btn-primary"

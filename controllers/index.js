@@ -42,7 +42,12 @@ class Controller {
 
   static async getHome(req, res) {
     try {
-      let data = await Product.findAll();
+      let data = await Product.findAll({
+          order: [
+              ['CategoryId', 'ASC'],
+              ['name', 'ASC']
+          ]
+      });
       // console.log(data[0].dataValues);
       res.render("home", { data, formatter });
     } catch (error) {
@@ -84,19 +89,54 @@ class Controller {
     }
   }
 
-  static async getOrder(req,res){
-    let data = await Order.findAll({include:Product})
-    res.render('order',{data})
+  static async showProductEdit(req, res) {
+    try {
+      const productId = req.params.productId;
+      let data = await Product.findByPk(productId, {
+          include: [Categorie]
+      });
+    //   console.log(data.dataValues);
+      res.render("editProduct", { data, formatter });
+    } catch (error) {
+      console.log(error);
+      res.send(error.message);
+    }
   }
 
-  static async getOrderDetail(req,res){
-    let{id} = req.params
+  static async postProductEdit(req, res) {
     try {
-      let data = await Order.findByPk(id,{include:Product})
-      res.render('orderDetails',{data})
+      const productId = req.params.productId
+      const {name, description, CategoryId, price, stock} = req.body
+      await Product.update({
+          name: name,
+          description: description,
+          CategoryId: CategoryId,
+          price: price,
+          stock: stock
+      }, {
+        where: {
+            id: productId
+        }
+      });
+
+      res.redirect("/home")      
     } catch (error) {
-      
+      console.log(error);
+      res.send(error.message);
     }
+  }
+
+  static async getOrder(req, res) {
+    let data = await Order.findAll({ include: Product });
+    res.render("order", { data });
+  }
+
+  static async getOrderDetail(req, res) {
+    let { id } = req.params;
+    try {
+      let data = await Order.findByPk(id, { include: Product });
+      res.render("orderDetails", { data });
+    } catch (error) {}
   }
 }
 module.exports = Controller;
