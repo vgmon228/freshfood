@@ -30,9 +30,9 @@ class Controller {
       if (data === null) {
         res.redirect(`/login?error=${"Username Tidak Ditemukan"}`);
       } else if (bcrypt.compareSync(password, data.password)) {
-        req.session.role = data.role
-        req.session.userid = data.id
-        res.redirect('/home');
+        req.session.role = data.role;
+        req.session.userid = data.id;
+        res.redirect("/home");
       } else {
         res.redirect(`/login?error=${"Password Salah"}`);
       }
@@ -45,7 +45,12 @@ class Controller {
   static async getHome(req, res) {
     let role = req.session.role
     try {
-      let data = await Product.findAll();
+      let data = await Product.findAll({
+        order: [
+          ["CategoryId", "ASC"],
+          ["name", "ASC"],
+        ],
+      });
       // console.log(data[0].dataValues);
       res.render("home", { data, formatter, role });
     } catch (error) {
@@ -96,20 +101,64 @@ class Controller {
     let{id} = req.params
     //console.log(req.session.role)
     try {
-      let data = await Order.findByPk(id,{include:Product})
-      res.render('orderDetails',{data,formatter})
+      const productId = req.params.productId;
+      let data = await Product.findByPk(productId, {
+        include: [Categorie],
+      });
+      //   console.log(data.dataValues);
+      res.render("editProduct", { data, formatter });
     } catch (error) {
-      
+      console.log(error);
+      res.send(error.message);
     }
   }
 
-  static async getLogOut(req,res){
+  static async postProductEdit(req, res) {
     try {
-      req.session.destroy()
-      res.redirect('/login')
+      const productId = req.params.productId;
+      const { name, description, CategoryId, price, stock } = req.body;
+      await Product.update(
+        {
+          name: name,
+          description: description,
+          CategoryId: CategoryId,
+          price: price,
+          stock: stock,
+        },
+        {
+          where: {
+            id: productId,
+          },
+        }
+      );
+
+      res.redirect("/home");
     } catch (error) {
-      console.log(error)
-      res.send(error)
+      console.log(error);
+      res.send(error.message);
+    }
+  }
+
+  static async getOrder(req, res) {
+    let data = await Order.findAll({ include: Product });
+    res.render("order", { data });
+  }
+
+  static async getOrderDetail(req, res) {
+    let { id } = req.params;
+    try {
+      let data = await Order.findByPk(id, { include: Product });
+      res.render("orderDetails", { data });
+    } catch (error) {}
+  }
+
+  static async getLogOut(req, res) {
+    try {
+      req.session.destroy();
+      res.redirect("/login");
+    } catch (error) {
+      console.log(error);
+      res.send(error);
     }
   }
 

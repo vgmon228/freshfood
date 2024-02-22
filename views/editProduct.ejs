@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit</title>
+  </head>
+  <body>
+    <div class="container">
+        <h1>Product Edit - Food Fresh</h1>
+      <form method="post" action="/product/<%= data.id %>/edit">
+        <div class="mb-3">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-control" name="name" value="<%= data.name %>" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Description</label>
+          <input type="text" class="form-control" name="description" value="<%= data.description %>" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Price</label>
+          <input type="text" class="form-control" name="price" value="<%= data.price %>" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Category</label>
+          <select class="form-select" aria-label="Default select example" name="CategoryId">
+            <option selected>Open this select menu</option>
+            <option value="1" <% if (data.CategoryId === 1) { %>selected<% } %>>Buah</option>
+            <option value="2" <% if (data.CategoryId === 2) { %>selected<% } %>>Sayur</option>
+            <option value="3" <% if (data.CategoryId === 3) { %>selected<% } %>>Ikan</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Stock</label>
+          <input type="text" class="form-control" name="stock" value="<%= data.stock %>" />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    <%- include('_bootstrap') %>
+  </body>
+</html>
