@@ -45,12 +45,12 @@ class Controller {
   }
 
   static async getHome(req, res) {
-    let {query} = req.query
+    let {query,error} = req.query
     let role = req.session.role;
     try {
       let data = await Product.findSearch(query)
       // console.log(data[0].dataValues);
-      res.render("home", { data, formatter, role });
+      res.render("home", { data, formatter, role,error });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -151,17 +151,20 @@ class Controller {
   static async delete(req, res) {
     try {
       const productId = req.params.productId;
-      await Product.destroy({
+      let data = await Product.findOne({
         where: {
           id: productId,
         },
-      });
-      res.redirect("/home");
+      })
+      data.destroy()
+      res.redirect(`/home?error=Product ${data.name} has been deleted`);
     } catch (error) {
         if (error.name === 'SequelizeForeignKeyConstraintError') {
-            res.send("The product is still in the user's order.")
+            res.redirect(`/home?error=${'The product is still in the user order'}`)
+        }else{
+          res.send(error)
         }
-        res.send(error.message);
+      
     }
   }
 
