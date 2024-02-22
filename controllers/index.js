@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const formatter = require("../helper");
 const { or } = require("sequelize");
 const { Op } = require("sequelize")
+const QRCode = require('qrcode')
 
 class Controller {
   static async getRegister(req, res) {
@@ -183,7 +184,8 @@ class Controller {
     let { id } = req.params;
     try {
       let data = await Order.findByPk(id, { include: Product });
-      res.render("orderDetails", { data });
+      let qrcode = await QRCode.toDataURL(data.order)
+      res.render("orderDetails", { data,qrcode });
     } catch (error) {
       console.log(error)
       res.send(error)
