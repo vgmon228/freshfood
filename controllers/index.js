@@ -30,7 +30,9 @@ class Controller {
       if (data === null) {
         res.redirect(`/login?error=${"Username Tidak Ditemukan"}`);
       } else if (bcrypt.compareSync(password, data.password)) {
-        res.send("Password Benar");
+        req.session.role = data.role
+        req.session.userid = data.id
+        res.redirect('/home');
       } else {
         res.redirect(`/login?error=${"Password Salah"}`);
       }
@@ -96,6 +98,16 @@ class Controller {
       res.render('orderDetails',{data,formatter})
     } catch (error) {
       
+    }
+  }
+
+  static async getLogOut(req,res){
+    try {
+      req.session.destroy()
+      res.redirect('/login')
+    } catch (error) {
+      console.log(error)
+      res.send(error)
     }
   }
 }
