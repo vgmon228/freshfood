@@ -9,6 +9,8 @@ router.post('/register',Controller.postRegister)
 router.get('/login',Controller.getLogin)
 router.post('/login',Controller.postLogin)
 router.get('/home', Controller.getHome)
+router.get('/product/add',Controller.getAddProduct)
+router.post('/product/add',Controller.postAddProduct)
 
 
 module.exports = router
