@@ -30,7 +30,9 @@ class Controller {
       if (data === null) {
         res.redirect(`/login?error=${"Username Tidak Ditemukan"}`);
       } else if (bcrypt.compareSync(password, data.password)) {
-        res.send("Password Benar");
+        req.session.role = data.role;
+        req.session.userid = data.id;
+        res.redirect("/home");
       } else {
         res.redirect(`/login?error=${"Password Salah"}`);
       }
@@ -43,10 +45,10 @@ class Controller {
   static async getHome(req, res) {
     try {
       let data = await Product.findAll({
-          order: [
-              ['CategoryId', 'ASC'],
-              ['name', 'ASC']
-          ]
+        order: [
+          ["CategoryId", "ASC"],
+          ["name", "ASC"],
+        ],
       });
       // console.log(data[0].dataValues);
       res.render("home", { data, formatter });
@@ -93,9 +95,9 @@ class Controller {
     try {
       const productId = req.params.productId;
       let data = await Product.findByPk(productId, {
-          include: [Categorie]
+        include: [Categorie],
       });
-    //   console.log(data.dataValues);
+      //   console.log(data.dataValues);
       res.render("editProduct", { data, formatter });
     } catch (error) {
       console.log(error);
@@ -105,21 +107,24 @@ class Controller {
 
   static async postProductEdit(req, res) {
     try {
-      const productId = req.params.productId
-      const {name, description, CategoryId, price, stock} = req.body
-      await Product.update({
+      const productId = req.params.productId;
+      const { name, description, CategoryId, price, stock } = req.body;
+      await Product.update(
+        {
           name: name,
           description: description,
           CategoryId: CategoryId,
           price: price,
-          stock: stock
-      }, {
-        where: {
-            id: productId
+          stock: stock,
+        },
+        {
+          where: {
+            id: productId,
+          },
         }
-      });
+      );
 
-      res.redirect("/home")      
+      res.redirect("/home");
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -137,6 +142,16 @@ class Controller {
       let data = await Order.findByPk(id, { include: Product });
       res.render("orderDetails", { data });
     } catch (error) {}
+  }
+
+  static async getLogOut(req, res) {
+    try {
+      req.session.destroy();
+      res.redirect("/login");
+    } catch (error) {
+      console.log(error);
+      res.send(error);
+    }
   }
 }
 module.exports = Controller;
