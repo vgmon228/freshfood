@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Food</title>
+</head>
+<body>
+    <h1>Add Product</h1>
+    <form action="" method="post">
+        <p><label>Nama Product</label></p>
+        <p><input type="text" name="name"></p>
+        <p><label >Description</label></p>
+        <p><textarea name="description" cols="30" rows="10"></textarea></p>
+        <label>Harga</label>
+        <input type="number" name="price">
+        <p></p><label >Category</label>
+        <select name="CategoryId">
+            <% categorie.forEach(element => { %>
+             <option value="<%= element.id %>"><%= element.name %></option>
+            <% }) %>
+        </select>
+        <p><label >ImageUrl</label>
+        <input type="text" name="imageUrl"></p>
+        <p><label>Stock</label>
+        <input type="number" name="stock"></p>
+        <button type="submit">Add</button>
+    </form>
+</body>
+</html>
