@@ -1,6 +1,7 @@
 const { User, Product, Order, OrderDetail, Categorie } = require("../models");
 const bcrypt = require("bcryptjs");
 const formatter = require("../helper");
+const { or } = require("sequelize");
 
 class Controller {
   static async getRegister(req, res) {
@@ -193,13 +194,16 @@ class Controller {
     }
   }
 
-  static async getBuy(req, res) {
-    let UserId = req.session.userid;
-    let { id } = req.params;
-    let data = await Product.findOne({ where: { id } });
-    data.increment("stock", { by: -1 });
-    Order.create({ UserId });
-    res.redirect("/home");
+  static async getBuy(req,res){
+    let UserId = req.session.userid
+    let{id}=req.params
+    let data = await Product.findOne({where:{id}})
+    data.increment('stock',{by: -1})
+    let order = await Order.create({UserId})
+    let OrderId = order.id
+    let ProductId = data.id
+    OrderDetail.create({ProductId,OrderId})
+    res.redirect('/home')
   }
 }
 module.exports = Controller;
