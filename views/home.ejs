@@ -59,7 +59,7 @@
                       <h5 class="card-title"><%= el.name %></h5>
                       <p class="card-text"><%= el.description %></p>
                       <div class="d-flex justify-content-between align-items-center">
-                        <p class="card-text font-weight-bold"><%= el.price %></p>
+                        <p class="card-text font-weight-bold"><%= formatter(el.price) %></p>
                         <p class="card-text">Stock: <strong><%= el.stock %></strong></p>
                       </div>
                       <a href="#" class="btn btn-primary"

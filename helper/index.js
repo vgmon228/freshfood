@@ -1,9 +1,9 @@
 function formatter(value) {
-  let newValue = new Int1.numberFormat("en.US", {
-    style: "currency",
-    currency: "IDR",
-  });
-  return newValue.format(value);
-}
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "IDR",
+    }).format(value);
+  }
+  
+module.exports = formatter
 
-module.exports = formatter;
