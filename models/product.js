@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Product.belongsToMany(models.Order, {through: models.OrderDetail})
+      Product.belongsToMany(models.Order, {onDelete: 'CASCADE',through: models.OrderDetail})
       Product.belongsTo(models.Categorie, {foreignKey:"CategoryId"})
     }
     static findSearch(query){

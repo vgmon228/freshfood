@@ -53,6 +53,7 @@ class Controller {
   static async getHome(req, res) {
     let { query, error } = req.query
     let role = req.session.role;
+    console.log(req.query,error)
     try {
       let data = await Product.findSearch(query)
       // console.log(data[0].dataValues);
@@ -149,7 +150,7 @@ class Controller {
           id: productId,
         },
       })
-      data.destroy()
+      await data.destroy()
       res.redirect(`/home?error=Product ${data.name} has been deleted`);
     } catch (error) {
       if (error.name === 'SequelizeForeignKeyConstraintError') {
